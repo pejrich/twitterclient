@@ -3,10 +3,11 @@ package com.codepath.apps.mytwitterclient;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
-public class LoginActivity extends OAuthLoginActionBarActivity<RestClient> {
+public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<RestClient> {
   // i.e Display application "homepage"
   @Override
   public void onLoginSuccess() {
+    Toast.makeText(this, "You have successfully signed in!", Toast.LENGTH_SHORT).show();
     // Intent i = new Intent(this, PhotosActivity.class);
     // startActivity(i);
   }
