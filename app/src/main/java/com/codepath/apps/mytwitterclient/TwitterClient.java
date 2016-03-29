@@ -45,6 +45,22 @@ public class TwitterClient extends OAuthBaseClient {
   // METHOD => ENDPOINT
 
   // HomeTimeline - Get us the home timeline
+  public void getHomeTimeline(long since, AsyncHttpResponseHandler handler) {
+    String apiUrl = getApiUrl("statuses/home_timeline.json");
+    // Specify the params
+    RequestParams params = new RequestParams();
+    params.put("count", 25);
+    params.put("since_id", since);
+    // Execute the request
+    getClient().get(apiUrl, params, handler);
+  }
+
+  public void postTweet(String tweet, AsyncHttpResponseHandler handler) {
+    String apiUrl = getApiUrl("statuses/update.json");
+    RequestParams params = new RequestParams();
+    params.put("status", tweet);
+    getClient().post(apiUrl, params, handler);
+  }
 
   /* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
    *    i.e getApiUrl("statuses/home_timeline.json");

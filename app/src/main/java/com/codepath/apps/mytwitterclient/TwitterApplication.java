@@ -1,7 +1,6 @@
 package com.codepath.apps.mytwitterclient;
 
 import android.content.Context;
-import android.util.Log;
 
 /*
 * This is the Android application itself and is used to configure various settings
@@ -17,7 +16,6 @@ public class TwitterApplication extends com.activeandroid.app.Application {
 
   @Override
   public void onCreate() {
-    Log.i("logger", "RESP APP ONCRE");
     super.onCreate();
     TwitterApplication.context = this;
   }
