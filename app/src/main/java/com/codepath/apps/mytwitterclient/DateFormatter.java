@@ -31,25 +31,33 @@ public class DateFormatter {
     // adapted from Google IO 2012
     long time = date.getTime();
     long now = System.currentTimeMillis();
-    if (time > now || time <= 0) {
-      return "just now";
+    if (time <= 0) {
+      time = 1;
     }
-    // TODO: localize
-    final long diff = now - time;
+    long diff = now - time;
+    boolean future = false;
+    if (time > now) {
+      diff = time - now;
+      future = true;
+    }
+
     if (diff < MINUTE_MILLIS) {
-      return "just now";
+      return (future) ? "in a moment" : "just now";
     } else if (diff < 2 * MINUTE_MILLIS) {
-      return "a minute ago";
+      return (future) ? "in a minute" : "a minute ago";
     } else if (diff < 50 * MINUTE_MILLIS) {
-      return diff / MINUTE_MILLIS + " minutes ago";
+      long mins = diff / MINUTE_MILLIS;
+      return (future) ? "in " + mins + " minutes" : mins + " minutes ago";
     } else if (diff < 90 * MINUTE_MILLIS) {
-      return "an hour ago";
+      return (future) ? "in an hour" : "an hour ago";
     } else if (diff < 24 * HOUR_MILLIS) {
-      return diff / HOUR_MILLIS + " hours ago";
+      long hours = diff / HOUR_MILLIS;
+      return (future) ? "in " + hours + " hours" : hours + " hours ago";
     } else if (diff < 48 * HOUR_MILLIS) {
-      return "yesterday";
+      return (future) ? "tomorrow" : "yesterday";
     } else {
-      return diff / DAY_MILLIS + " days ago";
+      long days = diff / DAY_MILLIS;
+      return (future) ? "in " + days + " days" : days + " days ago";
     }
   }
 }
