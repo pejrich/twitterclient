@@ -21,12 +21,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class TimelineActivity extends AppCompatActivity {
 
   private TwitterClient client;
   private ArrayList<Tweet> tweets;
   private TweetsArrayAdapter aTweets;
-  private ListView lvTweets;
+  @Bind(R.id.lvTweets) ListView lvTweets;
   private ProgressDialog progress;
 
   @Override
@@ -34,6 +37,7 @@ public class TimelineActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_timeline);
     client = TwitterApplication.getRestClient(); // Get singleton client
+    ButterKnife.bind(this);
     initVars();
     populateTimeline();
     lvTweets.setOnScrollListener(new EndlessScrollListener() {
@@ -96,7 +100,6 @@ public class TimelineActivity extends AppCompatActivity {
   }
 
   private void initVars() {
-    lvTweets = (ListView) findViewById(R.id.lvTweets);
     tweets = new ArrayList<>();
     aTweets = new TweetsArrayAdapter(this, tweets);
     lvTweets.setAdapter(aTweets);

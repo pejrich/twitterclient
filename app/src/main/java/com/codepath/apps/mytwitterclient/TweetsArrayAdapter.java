@@ -14,6 +14,9 @@ import com.codepath.apps.mytwitterclient.models.User;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
 
   public TweetsArrayAdapter(Context context, ArrayList<Tweet> tweets) {
@@ -21,20 +24,33 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
   }
 
   @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
+  public View getView(int position, View view, ViewGroup parent) {
+    ViewHolder holder;
+    if (view != null) {
+      holder = (ViewHolder) view.getTag();
+    } else {
+      view = LayoutInflater.from(getContext()).inflate(R.layout.tweet_item, parent, false);
+      holder = new ViewHolder(view);
+      view.setTag(holder);
+    }
+
     Tweet tweet = getItem(position);
     User user = tweet.getUser();
-    if (convertView == null) {
-      convertView = LayoutInflater.from(getContext()).inflate(R.layout.tweet_item, parent, false);
+    holder.tvBody.setText(tweet.getBody());
+    holder.tvUserName.setText(user.getName() + " (" + user.getScreenName() + ")");
+    holder.tvCreatedAt.setText(tweet.getCreatedAtInWords());
+    Glide.with(getContext()).load(user.getProfileImageUrl()).into(holder.ivUser);
+    return view;
+  }
+
+  static class ViewHolder {
+    @Bind(R.id.tvTweetBody) TextView tvBody;
+    @Bind(R.id.tvTweetUserName) TextView tvUserName;
+    @Bind(R.id.tvTweetCreatedAt) TextView tvCreatedAt;
+    @Bind(R.id.ivTweetUserImage) ImageView ivUser;
+
+    ViewHolder(View view) {
+      ButterKnife.bind(this, view);
     }
-    TextView tvBody = (TextView) convertView.findViewById(R.id.tvTweetBody);
-    tvBody.setText(tweet.getBody());
-    TextView tvUserName = (TextView) convertView.findViewById(R.id.tvTweetUserName);
-    tvUserName.setText(user.getName() + " (" + user.getScreenName() + ")");
-    TextView tvCreatedAt = (TextView) convertView.findViewById(R.id.tvTweetCreatedAt);
-    tvCreatedAt.setText(tweet.getCreatedAtInWords());
-    ImageView ivUser = (ImageView) convertView.findViewById(R.id.ivTweetUserImage);
-    Glide.with(getContext()).load(user.getProfileImageUrl()).into(ivUser);
-    return convertView;
   }
 }
