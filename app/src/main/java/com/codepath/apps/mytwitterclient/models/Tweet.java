@@ -1,7 +1,5 @@
 package com.codepath.apps.mytwitterclient.models;
 
-import android.util.Log;
-
 import com.codepath.apps.mytwitterclient.DateFormatter;
 
 import org.json.JSONArray;
@@ -72,9 +70,6 @@ public class Tweet implements Serializable {
     SimpleDateFormat format = new SimpleDateFormat(TWITTER);
     try {
       date = format.parse(createdAt);
-      Log.i("logger", "\nn\ne\nw\n");
-      Log.i("logger", "Created " + this.createdAt + "   " + this.getUser().getScreenName() + "    " + this.body);
-      Log.i("logger", "parsed date is " + date);
     } catch (ParseException e) { e.printStackTrace(); }
     if (date != null) {
       return DateFormatter.timeAgoInWords(date);
