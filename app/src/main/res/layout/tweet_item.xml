@@ -11,8 +11,8 @@
         android:id="@+id/tvTweetBody"
         android:text="Tweet Body"
         android:layout_below="@+id/ivTweetUserImage"
-        android:layout_alignRight="@+id/tvTweetUserName"
-        android:layout_alignEnd="@+id/tvTweetUserName"/>
+        android:layout_alignLeft="@+id/ivTweetUserImage"
+        android:layout_alignStart="@+id/ivTweetUserImage"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,11 +20,11 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Tweet User Name"
         android:id="@+id/tvTweetUserName"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/ivTweetUserImage"
         android:layout_toRightOf="@+id/ivTweetUserImage"
         android:layout_toEndOf="@+id/ivTweetUserImage"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,13 +32,14 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Created At"
         android:id="@+id/tvTweetCreatedAt"
-        android:layout_below="@+id/tvTweetUserName"
-        android:layout_toRightOf="@+id/ivTweetUserImage"
-        android:layout_toEndOf="@+id/ivTweetUserImage"/>
+        android:layout_above="@+id/tvTweetBody"
+        android:layout_alignLeft="@+id/tvTweetUserName"
+        android:layout_alignStart="@+id/tvTweetUserName"
+        android:layout_marginBottom="8dp"/>
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:id="@+id/ivTweetUserImage"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"

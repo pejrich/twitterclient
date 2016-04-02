@@ -15,12 +15,11 @@ public class User {
 
   public static User fromJSON(JSONObject jsonObject) {
     User user = new User();
-
     try {
       user.name               = jsonObject.getString("name");
       user.screenName         = jsonObject.getString("screen_name");
       user.uid                = jsonObject.getLong("id");
-      user.profileImageUrl    = jsonObject.getString("profile_background_image_url");
+      user.profileImageUrl    = jsonObject.getString("profile_image_url");
       user.followersCount     = jsonObject.getLong("followers_count");
     } catch (JSONException e) {
       e.printStackTrace();

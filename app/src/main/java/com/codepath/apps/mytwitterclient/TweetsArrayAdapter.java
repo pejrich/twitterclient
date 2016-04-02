@@ -8,9 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.mytwitterclient.models.Tweet;
 import com.codepath.apps.mytwitterclient.models.User;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
     TextView tvCreatedAt = (TextView) convertView.findViewById(R.id.tvTweetCreatedAt);
     tvCreatedAt.setText(tweet.getCreatedAtInWords());
     ImageView ivUser = (ImageView) convertView.findViewById(R.id.ivTweetUserImage);
-    Picasso.with(getContext()).load(user.getProfileImageUrl()).resize(50, 50).into(ivUser);
+    Glide.with(getContext()).load(user.getProfileImageUrl()).into(ivUser);
     return convertView;
   }
 }
