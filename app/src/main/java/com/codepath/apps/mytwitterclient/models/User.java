@@ -6,9 +6,11 @@ import org.json.JSONObject;
 public class User {
   private String name;
   private String screenName;
+  private String tagline;
   private long uid;
   private String profileImageUrl;
   private long followersCount;
+  private long followingCount;
 
   public User() {
   }
@@ -21,6 +23,8 @@ public class User {
       user.uid                = jsonObject.getLong("id");
       user.profileImageUrl    = jsonObject.getString("profile_image_url");
       user.followersCount     = jsonObject.getLong("followers_count");
+      user.followingCount     = jsonObject.getLong("friends_count");
+      user.tagline            = jsonObject.getString("description");
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -46,5 +50,13 @@ public class User {
 
   public long getFollowersCount() {
     return followersCount;
+  }
+
+  public long getFollowingCount() {
+    return followingCount;
+  }
+
+  public String getTagline() {
+    return tagline;
   }
 }

@@ -4,8 +4,13 @@ import android.content.Context;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
@@ -55,11 +60,67 @@ public class TwitterClient extends OAuthBaseClient {
     getClient().get(apiUrl, params, handler);
   }
 
+  public void getMentionsTimeline(long since, AsyncHttpResponseHandler handler) {
+    String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+    RequestParams params = new RequestParams();
+    params.put("count", 25);
+    params.put("since_id", since);
+    // Execute the request
+    getClient().get(apiUrl, params, handler);
+  }
+
   public void postTweet(String tweet, AsyncHttpResponseHandler handler) {
     String apiUrl = getApiUrl("statuses/update.json");
     RequestParams params = new RequestParams();
     params.put("status", tweet);
     getClient().post(apiUrl, params, handler);
+  }
+
+  public void getUserTimeline(String screenName, long since, AsyncHttpResponseHandler handler) {
+    String apiUrl = getApiUrl("statuses/user_timeline.json");
+    RequestParams params = new RequestParams();
+    params.put("count", 25);
+    params.put("screen_name", screenName);
+    params.put("since_id", since);
+    getClient().get(apiUrl, params, handler);
+  }
+
+  public void getFriendsList(String screenName, final AsyncHttpResponseHandler handler) {
+    String apiUrl = getApiUrl("friends/ids.json");
+    RequestParams params = new RequestParams();
+    params.put("screen_name", screenName);
+    params.put("count", 20);
+    getClient().get(apiUrl, params, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+        try {
+          JSONArray ids = jsonObject.getJSONArray("ids");
+          String apiUrl = getApiUrl("users/lookup.json");
+          RequestParams params = new RequestParams();
+          params.put("user_id", ids);
+          getClient().get(apiUrl, params, handler);
+        } catch (JSONException e) {}
+      }
+    });
+  }
+
+  public void getFollowersList(String screenName, final AsyncHttpResponseHandler handler) {
+    String apiUrl = getApiUrl("followers/ids.json");
+    RequestParams params = new RequestParams();
+    params.put("screen_name", screenName);
+    params.put("count", 20);
+    getClient().get(apiUrl, params, new JsonHttpResponseHandler() {
+      @Override
+      public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+        try {
+          JSONArray ids = jsonObject.getJSONArray("ids");
+          String apiUrl = getApiUrl("users/lookup.json");
+          RequestParams params = new RequestParams();
+          params.put("user_id", ids);
+          getClient().get(apiUrl, params, handler);
+        } catch (JSONException e) {}
+      }
+    });
   }
 
   /* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

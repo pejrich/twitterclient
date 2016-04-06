@@ -5,4 +5,5 @@
     <string name="title_activity_timeline">TimelineActivity</string>
     <string name="add_tweet">New Tweet</string>
     <string name="title_activity_new_tweet">NewTweetActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>
