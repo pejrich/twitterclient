@@ -3,6 +3,9 @@ package com.codepath.apps.mytwitterclient.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.codepath.apps.mytwitterclient.EndlessScrollListener;
@@ -19,13 +22,19 @@ public class UserTimelineFragment extends TweetsListFragment {
   private TwitterClient client;
   private String screenName;
 
+  @Nullable
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+    View v = super.onCreateView(inflater, parent, savedInstanceState);
+    setupScrollListener();
+    return v;
+  }
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     client = TwitterApplication.getRestClient(); // Get singleton client
     populateTimeline();
-    setupScrollListener();
   }
 
   public static UserTimelineFragment newInstance(String screenName) {
@@ -40,7 +49,7 @@ public class UserTimelineFragment extends TweetsListFragment {
     progressOn("Fetching Tweets");
     // send api request to get timeline json
     screenName = getArguments().getString("screen_name");
-    client.getUserTimeline(screenName, 0, new JsonHttpResponseHandler() {
+    client.getUserTimeline(screenName, 1, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
         addAll(Tweet.fromJSONArray(jsonArray));

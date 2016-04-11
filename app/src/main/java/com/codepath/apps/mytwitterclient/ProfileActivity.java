@@ -52,8 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
 //      }
 //    });
 
-    client.getUserTimeline(screenName, 0,
-            new JsonHttpResponseHandler() {
+    client.getUserTimeline(screenName, 1, new JsonHttpResponseHandler() {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
         try {
@@ -64,7 +63,6 @@ public class ProfileActivity extends AppCompatActivity {
         } catch (JSONException e) {}
       }
     });
-
   }
 
   private void populateProfileHeader(User user) {
